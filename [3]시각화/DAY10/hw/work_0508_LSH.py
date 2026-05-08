@@ -58,9 +58,16 @@ st.write(a.figure)
 # sns.violinplot(df, x='DEATH_EVENT', y='platelets', hue='smoking', split=True)
 
 st.title("죽음과 당뇨, 흡연의 상관관계")
+smoking_option = st.radio("흡연 여부 선택", ["전체", "비흡연자 (0)", "흡연자 (1)"])
+if smoking_option == "비흡연자 (0)":
+    df_smoking = df[df['smoking'] == 0]
+elif smoking_option == "흡연자 (1)":
+    df_smoking = df[df['smoking'] == 1]
+else:
+    df_smoking = df
 fig, ax = plt.subplots()
-b = sns.violinplot(data=df,x='DEATH_EVENT', y='platelets', hue='smoking',split=True)
-st.write(b.figure)
+sns.violinplot(data=df_smoking, x='DEATH_EVENT', y='platelets', hue='smoking', split=True, ax=ax)
+st.pyplot(fig)
 
 # # 1
 # time칼럼을 알아보기 위해 해당 칼럼의 histogram을 작성합니다. seaborn의 histplot 함수를 이용하세요.
