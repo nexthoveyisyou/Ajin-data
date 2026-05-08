@@ -10,8 +10,14 @@
 
 
 import pandas as pd
-df_a = pd.read_json('heart_failure_a.json')
-df_b = pd.read_json('heart_failure_b.json')
+import os
+
+# 현재 스크립트 파일 기준으로 경로 잡기
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+df_a = pd.read_json(os.path.join(BASE_DIR, 'heart_failure_a.json'))
+df_b = pd.read_json(os.path.join(BASE_DIR, 'heart_failure_b.json'))  # 다른 파일도 같은 방식
+
 df = pd.merge(df_a, df_b, on='person_id', how='inner')
 dropped_num = len(df_a) - len(df) + len(df_b) - len(df)
 
