@@ -73,6 +73,10 @@ st.write(b.figure)
 # sns.histplot(df, x='time', bins=20, hue='DEATH_EVENT')
 
 st.title("Time 히스토그램")
+ef_min = int(df['ejection_fraction'].min())
+ef_max = int(df['ejection_fraction'].max())
+ef_range = st.slider("심박출(ejection_fraction) 범위 선택", ef_min, ef_max, (ef_min, ef_max))
+df_filtered = df[(df['ejection_fraction'] >= ef_range[0]) & (df['ejection_fraction'] <= ef_range[1])]
 fig, ax = plt.subplots()
-c = sns.histplot(data=df, x='time', bins=20, hue='DEATH_EVENT')
-st.write(c.figure)
+sns.histplot(data=df_filtered, x='time', bins=20, hue='DEATH_EVENT', ax=ax)
+st.pyplot(fig)
