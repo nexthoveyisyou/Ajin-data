@@ -58,15 +58,11 @@ st.write(a.figure)
 # sns.violinplot(df, x='DEATH_EVENT', y='platelets', hue='smoking', split=True)
 
 st.title("죽음과 당뇨, 흡연의 상관관계")
-smoking_option = st.radio("흡연 여부 선택", ["전체", "비흡연자 (0)", "흡연자 (1)"])
-if smoking_option == "비흡연자 (0)":
-    df_smoking = df[df['smoking'] == 0]
-elif smoking_option == "흡연자 (1)":
-    df_smoking = df[df['smoking'] == 1]
-else:
-    df_smoking = df
+smoking_option = st.radio("흡연 여부 선택", ["비흡연자 (0)", "흡연자 (1)"])
+smoking_val = 0 if smoking_option == "비흡연자 (0)" else 1
+df_smoking = df[df['smoking'] == smoking_val]
 fig, ax = plt.subplots()
-sns.violinplot(data=df_smoking, x='DEATH_EVENT', y='platelets', hue='smoking', split=True, ax=ax)
+sns.violinplot(data=df_smoking, x='DEATH_EVENT', y='platelets', ax=ax)
 st.pyplot(fig)
 
 # # 1
